@@ -119,15 +119,26 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         let currentViewController = self.pageViewController!.viewControllers![0] as! DataViewController
         var viewControllers: [UIViewController]
 
-        let indexOfCurrentViewController = self.modelController.indexOfViewController(currentViewController)
-        if (indexOfCurrentViewController == 0) || (indexOfCurrentViewController % 2 == 0) {
-            let nextViewController = self.modelController.pageViewController(self.pageViewController!, viewControllerAfter: currentViewController)
-            viewControllers = [currentViewController, nextViewController!]
-        } else {
-            let previousViewController = self.modelController.pageViewController(self.pageViewController!, viewControllerBefore: currentViewController)
-            viewControllers = [previousViewController!, currentViewController]
+        
+        if let pageViewController = self.pageViewController {
+            
+            let indexOfCurrentViewController = self.modelController.indexOfViewController(currentViewController)
+            if (indexOfCurrentViewController == 0) || (indexOfCurrentViewController % 2 == 0) {
+                if let nextViewController = self.modelController.pageViewController(pageViewController, viewControllerAfter: currentViewController){
+                    viewControllers = [currentViewController, nextViewController]
+                }
+            } else {
+                if let previousViewController = self.modelController.pageViewController(pageViewController, viewControllerBefore: currentViewController) {
+                    viewControllers = [previousViewController, currentViewController]
+                }
+                
+            }
+            
+            //we can do this because it's gaurinteed to not be nill
+            self.pageViewController!.setViewControllers(pageviewControllers, direction: .forward, animated: true, completion: {done in })
         }
-        self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
+        
+        
 
         return .mid
     }
