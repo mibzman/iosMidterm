@@ -28,37 +28,54 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
             print("error: PageViewController is nil")
         }
         
-        //gets the main storyboard
+        //gets the first storyboard
         guard let storyboard = self.storyboard else{
             print("error: no storyboard")
             return
         }
-        //gets the first viewcontroller on the main storyboard
+        //gets the first viewcontroller on the first storyboard
         guard let indexedViewController = self.modelController.viewControllerAtIndex(0, storyboard: storyboard) else{
             print("error: no viewController!")
             return
         }
         let startingViewController: DataViewController = indexedViewController
         let viewControllers = [startingViewController]
+        //sets up that viewcontroler to be animated during the transition between pages
         if self.pageViewController != nil{
             self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
         }
 
         
+        //connects the actual data to the model, which notifies the view via the controller when the data changes
+        if self.pageViewController!.dataSource != nil {
+            self.pageViewController!.dataSource = self.modelController
+        }
 
-        self.pageViewController!.dataSource = self.modelController
-
-        self.addChildViewController(self.pageViewController!)
-        self.view.addSubview(self.pageViewController!.view)
+        guard let pageViewController = self.pageViewController else{
+            print("error: no pageViewController")
+            return
+        }
+        //addes the curent view to the set of views to be switched between
+        self.addChildViewController(pageViewController)
+        
+        guard let pageView = self.pageViewController?.view else{
+            print("error: no page View!")
+            return
+        }
+        self.view.addSubview(pageView)
 
         // Set the page view controller's bounds using an inset rect so that self's view is visible around the edges of the pages.
         var pageViewRect = self.view.bounds
         if UIDevice.current.userInterfaceIdiom == .pad {
             pageViewRect = pageViewRect.insetBy(dx: 40.0, dy: 40.0)
         }
-        self.pageViewController!.view.frame = pageViewRect
-
-        self.pageViewController!.didMove(toParentViewController: self)
+        
+        if self.pageViewController!.view.frame != nil{
+            self.pageViewController!.view.frame = pageViewRect
+            
+            self.pageViewController!.didMove(toParentViewController: self)
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +89,7 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         if _modelController == nil {
             _modelController = ModelController()
         }
+        
         return _modelController!
     }
 
@@ -82,11 +100,18 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, spineLocationFor orientation: UIInterfaceOrientation) -> UIPageViewControllerSpineLocation {
         if (orientation == .portrait) || (orientation == .portraitUpsideDown) || (UIDevice.current.userInterfaceIdiom == .phone) {
             // In portrait orientation or on iPhone: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to true, so set it to false here.
-            let currentViewController = self.pageViewController!.viewControllers![0]
-            let viewControllers = [currentViewController]
-            self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
+            
+            //I would like this to be a guard, but the multiple "!"s and the top object being non-optional would result in a multi-layered guard
+            if self.pageViewController!.viewControllers![0] != nil{
+                let currentViewController = self.pageViewController!.viewControllers![0]
+                let viewControllers = [currentViewController]
+                self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
+            }
+            
 
-            self.pageViewController!.isDoubleSided = false
+            if self.pageViewController!.isDoubleSided != nil{
+                self.pageViewController!.isDoubleSided = false
+            }
             return .min
         }
 
