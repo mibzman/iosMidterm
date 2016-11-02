@@ -126,16 +126,16 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
             if (indexOfCurrentViewController == 0) || (indexOfCurrentViewController % 2 == 0) {
                 if let nextViewController = self.modelController.pageViewController(pageViewController, viewControllerAfter: currentViewController){
                     viewControllers = [currentViewController, nextViewController]
+                    self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
                 }
             } else {
                 if let previousViewController = self.modelController.pageViewController(pageViewController, viewControllerBefore: currentViewController) {
                     viewControllers = [previousViewController, currentViewController]
+                    self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
                 }
                 
             }
-            
-            //we can do this because it's gaurinteed to not be nill
-            self.pageViewController!.setViewControllers(pageviewControllers, direction: .forward, animated: true, completion: {done in })
+                        
         }
         
         
