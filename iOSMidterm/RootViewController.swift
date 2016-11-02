@@ -10,7 +10,7 @@ import UIKit
 
 class RootViewController: UIViewController, UIPageViewControllerDelegate {
 
-    var pageViewController: UIPageViewController?
+    var mainPageViewController: UIPageViewController?
 
 
     override func viewDidLoad() {
@@ -19,11 +19,11 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         
         // Do any additional setup after loading the view, typically from a nib.
         // Configure the page view controller and add it as a child view controller.
-        self.pageViewController = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
+        self.mainPageViewController = UIPageViewController(transitionStyle: .pageCurl, navigationOrientation: .horizontal, options: nil)
         
         
-        if self.pageViewController!.delegate != nil{
-            self.pageViewController!.delegate = self
+        if self.mainPageViewController!.delegate != nil{
+            self.mainPageViewController!.delegate = self
         }else{
             print("error: PageViewController is nil")
         }
@@ -41,24 +41,24 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
         let startingViewController: DataViewController = indexedViewController
         let viewControllers = [startingViewController]
         //sets up that viewcontroler to be animated during the transition between pages
-        if self.pageViewController != nil{
-            self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
+        if self.mainPageViewController != nil{
+            self.mainPageViewController!.setViewControllers(viewControllers, direction: .forward, animated: false, completion: {done in })
         }
 
         
         //connects the actual data to the model, which notifies the view via the controller when the data changes
-        if self.pageViewController!.dataSource != nil {
-            self.pageViewController!.dataSource = self.modelController
+        if self.mainPageViewController!.dataSource != nil {
+            self.mainPageViewController!.dataSource = self.modelController
         }
 
-        guard let pageViewController = self.pageViewController else{
+        guard let mainPageViewController = self.mainPageViewController else{
             print("error: no pageViewController")
             return
         }
         //addes the curent view to the set of views to be switched between
-        self.addChildViewController(pageViewController)
+        self.addChildViewController(mainPageViewController)
         
-        guard let pageView = self.pageViewController?.view else{
+        guard let pageView = self.mainPageViewController?.view else{
             print("error: no page View!")
             return
         }
@@ -70,10 +70,10 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
             pageViewRect = pageViewRect.insetBy(dx: 40.0, dy: 40.0)
         }
         
-        if self.pageViewController!.view.frame != nil{
-            self.pageViewController!.view.frame = pageViewRect
+        if self.mainPageViewController!.view.frame != nil{
+            self.mainPageViewController!.view.frame = pageViewRect
             
-            self.pageViewController!.didMove(toParentViewController: self)
+            self.mainPageViewController!.didMove(toParentViewController: self)
         }
         
     }
@@ -102,36 +102,36 @@ class RootViewController: UIViewController, UIPageViewControllerDelegate {
             // In portrait orientation or on iPhone: Set the spine position to "min" and the page view controller's view controllers array to contain just one view controller. Setting the spine position to 'UIPageViewControllerSpineLocationMid' in landscape orientation sets the doubleSided property to true, so set it to false here.
             
             //I would like this to be a guard, but the multiple "!"s and the top object being non-optional would result in a multi-layered guard
-            if self.pageViewController!.viewControllers![0] != nil{
-                let currentViewController = self.pageViewController!.viewControllers![0]
+            if self.mainPageViewController!.viewControllers![0] != nil{
+                let currentViewController = self.mainPageViewController!.viewControllers![0]
                 let viewControllers = [currentViewController]
-                self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
+                self.mainPageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
             }
             
 
-            if self.pageViewController!.isDoubleSided != nil{
-                self.pageViewController!.isDoubleSided = false
+            if self.mainPageViewController!.isDoubleSided != nil{
+                self.mainPageViewController!.isDoubleSided = false
             }
             return .min
         }
 
         // In landscape orientation: Set set the spine location to "mid" and the page view controller's view controllers array to contain two view controllers. If the current page is even, set it to contain the current and next view controllers; if it is odd, set the array to contain the previous and current view controllers.
-        let currentViewController = self.pageViewController!.viewControllers![0] as! DataViewController
+        let currentViewController = self.mainPageViewController!.viewControllers![0] as! DataViewController
         var viewControllers: [UIViewController]
 
         
-        if let pageViewController = self.pageViewController {
+        if let pageViewController = self.mainPageViewController {
             
             let indexOfCurrentViewController = self.modelController.indexOfViewController(currentViewController)
             if (indexOfCurrentViewController == 0) || (indexOfCurrentViewController % 2 == 0) {
                 if let nextViewController = self.modelController.pageViewController(pageViewController, viewControllerAfter: currentViewController){
                     viewControllers = [currentViewController, nextViewController]
-                    self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
+                    self.mainPageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
                 }
             } else {
                 if let previousViewController = self.modelController.pageViewController(pageViewController, viewControllerBefore: currentViewController) {
                     viewControllers = [previousViewController, currentViewController]
-                    self.pageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
+                    self.mainPageViewController!.setViewControllers(viewControllers, direction: .forward, animated: true, completion: {done in })
                 }
                 
             }
