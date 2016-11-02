@@ -13,7 +13,6 @@
 		EE73EC761DCA65C100AFA979 /* ModelController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE73EC751DCA65C100AFA979 /* ModelController.swift */; };
 		EE73EC791DCA65C100AFA979 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE73EC771DCA65C100AFA979 /* Main.storyboard */; };
 		EE73EC7B1DCA65C100AFA979 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EE73EC7A1DCA65C100AFA979 /* Assets.xcassets */; };
-		EE73EC7E1DCA65C100AFA979 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE73EC7C1DCA65C100AFA979 /* LaunchScreen.storyboard */; };
 		EE73EC891DCA65C100AFA979 /* iOSMidtermTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE73EC881DCA65C100AFA979 /* iOSMidtermTests.swift */; };
 		EE73EC941DCA65C100AFA979 /* iOSMidtermUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE73EC931DCA65C100AFA979 /* iOSMidtermUITests.swift */; };
 /* End PBXBuildFile section */
@@ -43,7 +42,6 @@
 		EE73EC751DCA65C100AFA979 /* ModelController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelController.swift; sourceTree = "<group>"; };
 		EE73EC781DCA65C100AFA979 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EE73EC7A1DCA65C100AFA979 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		EE73EC7D1DCA65C100AFA979 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EE73EC7F1DCA65C100AFA979 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EE73EC841DCA65C100AFA979 /* iOSMidtermTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSMidtermTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE73EC881DCA65C100AFA979 /* iOSMidtermTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSMidtermTests.swift; sourceTree = "<group>"; };
@@ -107,7 +105,6 @@
 				EE73EC751DCA65C100AFA979 /* ModelController.swift */,
 				EE73EC771DCA65C100AFA979 /* Main.storyboard */,
 				EE73EC7A1DCA65C100AFA979 /* Assets.xcassets */,
-				EE73EC7C1DCA65C100AFA979 /* LaunchScreen.storyboard */,
 				EE73EC7F1DCA65C100AFA979 /* Info.plist */,
 			);
 			path = iOSMidterm;
@@ -238,7 +235,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE73EC7E1DCA65C100AFA979 /* LaunchScreen.storyboard in Resources */,
 				EE73EC7B1DCA65C100AFA979 /* Assets.xcassets in Resources */,
 				EE73EC791DCA65C100AFA979 /* Main.storyboard in Resources */,
 			);
@@ -310,14 +306,6 @@
 				EE73EC781DCA65C100AFA979 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		EE73EC7C1DCA65C100AFA979 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				EE73EC7D1DCA65C100AFA979 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
